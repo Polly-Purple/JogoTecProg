@@ -1,0 +1,39 @@
+class Jogo {
+public:
+    sf::RenderWindow window;
+    Jogador jogador;
+    std::vector<Obstaculo> obstaculos;
+    std::vector<Inimigo> inimigos;
+    std::vector<Entidade*> entidades;
+    GerenciadorGrafico gerenciadorGrafico;
+    sf::View cameraView;
+
+    Game()
+        : window(sf::VideoMode(1366, 768), "Fever Dream"),
+        jogador(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(50.0f, 50.0f)),
+        cameraView(sf::FloatRect(0.0f, 0.0f, 800.0f, 600.0f)) {
+
+        // Mais codigo...
+
+        // Colocar a posição inicial da camera como a posição do jogador
+        cameraView.setCenter(jogador.forma.getPosition());
+    }
+
+    void updateCamera() {
+        // Atualizar a posicao da camera pra seguir jogador
+        cameraView.setCenter(jogador.forma.getPosition());
+        window.setView(cameraView);
+    }
+
+    void render() {
+        window.clear();
+
+        // Renderizar entidades pra camera
+        window.setView(cameraView);
+        graphicsManager.renderEntities(window, entities);
+
+        window.display();
+    }
+
+    // resto do codigo
+};
